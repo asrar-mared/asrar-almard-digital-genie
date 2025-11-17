@@ -1,4 +1,3 @@
-https://codespaces.new/asrar-mared/asrar-almard-digital-genie?quickstart=1
 ![Stars](https://img.shields.io/github/stars/asrar-mared/asrar-mared?style=social)
 ![Forks](https://img.shields.io/github/forks/asrar-mared/asrar-mared?style=social)
 ![Watchers](https://img.shields.io/github/watchers/asrar-mared/asrar-mared?style=social)
