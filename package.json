@@ -24,14 +24,14 @@
   "author": "Your Name",
   "license": "MIT",
   "dependencies": {
-    "express": "^4.18.2",
-    "dotenv": "^16.3.1",
+    "express": "^5.2.1",
+    "dotenv": "^17.2.3",
     "cors": "^2.8.5",
-    "helmet": "^7.1.0",
+    "helmet": "^8.1.0",
     "morgan": "^1.10.0",
-    "express-rate-limit": "^7.1.5",
+    "express-rate-limit": "^8.2.1",
     "compression": "^1.7.4",
-    "joi": "^17.11.0",
+    "joi": "^18.0.2",
     "winston": "^3.11.0"
   },
   "devDependencies": {
@@ -39,12 +39,12 @@
     "@babel/core": "^7.23.5",
     "@babel/preset-env": "^7.23.5",
     "nodemon": "^3.0.2",
-    "eslint": "^8.55.0",
+    "eslint": "^9.39.1",
     "prettier": "^3.1.1",
     "jest": "^30.0.0",
-    "supertest": "^6.3.3",
-    "husky": "^8.0.3",
-    "lint-staged": "^15.2.0"
+    "supertest": "^7.1.4",
+    "husky": "^9.1.7",
+    "lint-staged": "^16.2.7"
   },
   "engines": {
     "node": ">=18.0.0",
