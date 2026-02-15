@@ -1,17 +1,17 @@
-name: "CodeQL Advanced"
+name: "CodeQL Global Security Scan"
 
+# تشغيل على كل push و pull request على أي فرع، وجدولة أسبوعية
 on:
   push:
-    branches: [ "main" ]
+    branches: [ "**" ]
   pull_request:
-    branches: [ "main" ]
+    branches: [ "**" ]
   schedule:
-    - cron: '41 20 * * 5'
+    - cron: '0 2 * * 0' # كل يوم أحد الساعة 2 صباحًا UTC
 
 jobs:
   analyze:
-    name: Analyze (${{ matrix.language }})
-    # اختيار نظام التشغيل بناءً على اللغة
+    name: "CodeQL Analysis (${{ matrix.language }})"
     runs-on: ${{ (matrix.language == 'swift' && 'macos-latest') || 'ubuntu-latest' }}
     
     permissions:
@@ -24,35 +24,49 @@ jobs:
       fail-fast: false
       matrix:
         include:
-          # قم بتعديل هذه القائمة لتشمل اللغات التي يستخدمها مشروعك فعلياً
-          # مثال: javascript-typescript, python, java-kotlin, go, c-cpp, ruby, csharp, rust, swift
           - language: 'javascript-typescript'
+            build-mode: 'none'
+          - language: 'python'
+            build-mode: 'none'
+          - language: 'java'
+            build-mode: 'none'
+          - language: 'csharp'
+            build-mode: 'none'
+          - language: 'cpp'
+            build-mode: 'none'
+          - language: 'go'
+            build-mode: 'none'
+          - language: 'ruby'
+            build-mode: 'none'
+          - language: 'rust'
+            build-mode: 'none'
+          - language: 'swift'
             build-mode: 'none'
           - language: 'actions'
             build-mode: 'none'
 
     steps:
-    - name: Checkout repository
-      uses: actions/checkout@v4
+      # جلب كل الكود
+      - name: Checkout repository
+        uses: actions/checkout@v4
 
-    # تهيئة أدوات CodeQL
-    - name: Initialize CodeQL
-      uses: github/codeql-action/init@v3
-      with:
-        languages: ${{ matrix.language }}
-        build-mode: ${{ matrix.build-mode }}
-        queries: security-extended,security-and-quality
+      # تهيئة CodeQL
+      - name: Initialize CodeQL
+        uses: github/codeql-action/init@v3
+        with:
+          languages: ${{ matrix.language }}
+          build-mode: ${{ matrix.build-mode }}
+          queries: security-extended,security-and-quality
 
-    # بناء الكود يدوياً (فقط إذا كان وضع البناء manual)
-    - if: matrix.build-mode == 'manual'
-      shell: bash
-      run: |
-        echo 'If you are using "manual" build mode, replace these lines with your build commands'
-        echo 'Example: make bootstrap && make release'
-        exit 1
+      # بناء الكود يدوياً إذا كان build-mode manual
+      - if: matrix.build-mode == 'manual'
+        shell: bash
+        run: |
+          echo "Manual build required. ضع أوامر البناء هنا."
+          exit 1
 
-    # تنفيذ عملية التحليل
-    - name: Perform CodeQL Analysis
-      uses: github/codeql-action/analyze@v3
-      with:
-        category: "/language:${{ matrix.language }}"
+      # تحليل الكود
+      - name: Perform CodeQL Analysis
+        uses: github/codeql-action/analyze@v3
+        with:
+          category: "/language:${{ matrix.language }}"
